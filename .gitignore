@@ -1,0 +1,80 @@
+# Bytecode
+# *.py[co]
+.venv
+# Leftovers from merges
+# *.orig
+
+# File uploads and what not
+#files/avatars/*-*
+#files/avatars/user/*
+
+#files/avatars/team/*
+#files/avatars/box/*
+#files/avatars/upload/*
+#files/story/*
+#files/icons/*-*
+#files/shares/*-*
+#files/source_code_market/*-*
+#files/game_materials/*
+#files/flag_attachments/*
+#files/*.db
+#files/*.cfg
+
+#Alembic
+# alembic/alembic.ini
+
+#Locale
+# locale/.~*
+
+# Packages
+# *.egg
+# *.egg-info
+# dist
+# build
+# eggs
+# parts
+# bin
+# var
+# sdist
+# develop-eggs
+# .installed.cfg
+
+# SSL Stuff
+# *.crt
+# *.key
+
+# XML exports
+# *.xml
+# !demo_juiceshop.xml
+
+# SQLite3 databases
+# *.db
+# *.db-journal
+
+# Screen files
+# *.0
+
+# Log files
+# *.log
+
+# Installer logs
+# pip-log.txt
+
+# IDE
+#.project
+#.pydevproject
+#.idea/*
+#.vscode/*
+
+# OSX
+#.DS_Store
+#.dccache
+
+#__pycache__
+#*/__pycache__
+
+# Backups
+#*.bak
+
+# Readme
+!*README.md

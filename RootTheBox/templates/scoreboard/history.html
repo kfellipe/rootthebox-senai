@@ -1,0 +1,108 @@
+{% extends "../main.html" %}
+
+{% block title %}{{ _("History") }}{% end %}
+
+{% block header %}
+<script src="/static/js/libs/highcharts-all.js"></script>
+<script src="/static/js/pages/scoreboard/history.js"></script>
+<link href="/static/css/pages/public/summary.css" rel="stylesheet" />
+{% end %}
+
+{% block content %}
+{% from tornado.options import options %}
+    {% if not hide_scoreboard %}
+        <script type="application/javascript">
+            setGraphTitle("{% if options.banking %}{{ _('Bank Account Balance') }}{% else %}{{ _('Score') }}{% end %}");
+            setGraphScale("{% if options.banking %}{{ _('Money') }}{% else %}{{ _('Points') }}{% end %}");
+            setGraphSymbol("{% if options.banking %}{{ _('$') }}{% end %}");
+        </script>
+        <div class="row-fluid">
+            {% if timer %}
+            <h3 id="timercount" title="Scoreboard Countdown" style="float: right; color: red; margin-top: 3px; margin-bottom: 0px; margin-right: 150px;"></h3>
+            {% end %}
+            <h1 class="offset1" style="margin-bottom: 0px;">
+                <i class="fa fa-bar-chart-o"></i>
+                {{ _("Charts") }}
+            </h1>
+            <br />
+            <div class="row-fluid">
+            <div class="well span10 offset1">
+                <div class="navbar navbar-inverse">
+                    <div class="navbar-inner">
+                        <div class="container ">
+                            <a class="brand" href="#">
+                                <i id="history-icon" class="fa fa-fw fa-calendar"></i>
+                                {{ _("History") }}
+                            </a>
+                            <div class="nav-collapse collapse">
+                                <ul class="nav">
+                                    <li>
+                                        <a id="flags-history-button" href="#">
+                                            <i class="fa fa-flag"></i>
+                                            {{ _("Flags") }}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a id="money-history-button" href="#">
+                                            {% if options.banking %}
+                                                <i class="fa fa-dollar"></i>
+                                                {{ _("Money") }}
+                                            {% else %}
+                                                <i class="fa fa-fw fa-bar-chart-o"></i>
+                                                {{ _("Score") }}
+                                            {% end %}
+                                        </a>
+                                    </li>
+                                    {% if options.use_bots %}
+                                        <li>
+                                            <a id="bots-history-button" href="#">
+                                                <i class="fa fa-android"></i>
+                                                {{ _("Bots") }}
+                                            </a>
+                                        </li>
+                                    {% end %}
+                                    <li style="padding: 15px; padding-right: 0;">{{ _("Top") }}</li>
+                                    <li style="padding: 10px; padding-bottom: 0px;">
+                                        <select id="datapoints" style="width: 100px;">
+                                            <option value="5">5</option>
+                                            <option value="10" selected>10</option>
+                                            <option value="15">15</option>
+                                            <option value="25">20</option>
+                                            <option value="30">30</option>
+                                        </select>  
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="nav pull-right">
+                                <a class="brand">
+                                    <i id="activity-monitor" class="fa fa-fw fa-eye-slash"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="history-graph" style="height:400px;" data-name="{{ _('Botnets') }}"
+                    data-xaxis="{{ _('Time') }}" data-yaxis="{{ _('Number of Bots') }}">
+                    <!-- Graph goes here - used for several graphs, not just bots -->
+                </div>
+            </div>
+        </div>
+            <div id="pie_graphs" class="row-fluid">
+                <div class="well span5 offset1">
+                    <div id="pie_flags" style="height:300px;" data-name="{{ _('Flags Captured') }} ({{ _('Top 10') }})">
+                        <!-- Pie Chart Here -->
+                    </div>
+                </div>
+                <div class="well span5">
+                    <div id="pie_money" style="height:300px;" 
+                        data-name="{% if options.banking %}{{ _('Bank Account') }}{% else %}{{ _('Score') }}{% end %}  ({{ _('Top 10') }})" 
+                        data-symbol="{% if options.banking %}{{ _('$') }}{% end %}">
+                        <!-- Pie Chart Here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <h1 id="timercount_hidescoreboard" class="timercount"></h1>
+    {% end %}
+{% end %}
