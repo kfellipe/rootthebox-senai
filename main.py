@@ -1,5 +1,7 @@
-from jinja2 import Environment, FileSystemLoader
+from jinja2 import Environment, FileSystemLoader, Template
 import os, yaml, subprocess, apt
+from rich.console import Console
+from rich.table import Table
 
 # Edite essas variaveis de acordo com o seu uso
 # Maximo de 154(incluindo)
@@ -12,18 +14,29 @@ interface_name="ens224"
 docker_image="nycolases6/ubuntu-bind9-nginx-ssh:1.0"
 portas=["80", "22", "53"]
 
+def limpar_tela():
+    os.system("clear")
+
 # Função para criar os containers do CTF
-def create_CTF(single):
+def create_CTF():
     for x in range(1,numero_jogadores+1):
     # Criando o arquivo de interfaces para adicionar uma interface para cada CTF criado
         number = f"{x:02}"
-        with open(f"{interfaces_folder}/interface-ctf-{number}.conf", "w") as arq:
-            arq.write(f"""
-auto {interface_name}:1{number}
-iface {interface_name}:1{number} inet static
-    address {network}1{number}/24
+        template_str = """
+{% for x in range(number) %}
+auto {{interface_name}}:1{{x}}
+iface {{interface_name}}:1{{x}} inet static
+    address {{network}}1{{x}}/24
+{% endfor %}
+"""
 
-    """)
+        # Criar o template a partir da string
+        template = Template(template_str)
+
+        # Renderizar o template com os dados
+        output = template.render(number=number)
+        with open(f"{interfaces_folder}/interfaces-ctf.conf", "w") as arq:
+            arq.write(output)
         my_cmd = f"sudo ifup {interface_name}:1{number}"
         proc = subprocess.Popen(my_cmd, shell=True, stdout=subprocess.PIPE)
     if web_files_folder != "":
@@ -90,48 +103,72 @@ def create_rtb():
         "webapp":{"build":"./RootTheBox/", "ports":["8888:8888"], "volumes": ["./RootTheBox/files:/opt/rtb/files:rw"],"environment":["COMPOSE_CONVERT_WINDOWS_PATHS=1"]}}
     return composer
 
-def main():
-    os.system("clear")
-    print("\n\n", "=-" * 10, " Bem Vindo ", "=-" * 10, "\n\n")
-    print(""" - Bem vindo ao script para criar um jogo CTF completo e de facil uso.
- - Para o correto funcionamento do script, é necessário seguir os passos
- - fornecidos no README.md e durante o processo de execução do mesmo.\n""")
+def is_package_installed(package_name):
+    # Cria um cache do APT
+    cache = apt.Cache()
+    # Atualiza o cache (opcional, se você quer garantir os dados mais recentes)
+    cache.update()
+    cache.open()
+    
+    # Verifica se o pacote existe no cache
+    if package_name in cache:
+        package = cache[package_name]
+        # Retorna True se o pacote está instalado
+        return package.is_installed
+    else:
+        # O pacote não existe no cache
+        return False
 
-    print("=" * 40)
+def main():
+    limpar_tela()
+    console = Console(width=40)
+    console.print("Bem Vindo!", style="bold italic cyan on white", justify="center")
+    console.print("Bem vindo ao script para criar um jogo CTF completo e de facil uso. Para o correto funcionamento do script, é necessário seguir os passos fornecidos no README.md e durante o processo de execução do mesmo.", style="white on black", overflow="fold", justify="left")
+
+    print("\n" + "=" * 40 + "\n")
 
     package_list = ['python3-yaml', 'python3-jinja2', 'pandoc', 'lynx']
 
-    print("\nVerificando se os pacotes requeridos estão instalados: \n")
+    console.print("Verificando se os pacotes requeridos estão instalados:", style="white on black", justify="center")
 
+    table = Table(width=40)
+
+    table.add_column("Pacote", style="cyan on black", overflow="fold")
+    table.add_column("Instalado", style="white on black")
     for package in package_list:
-        cache = apt.Cache()
-        if cache[package].is_installed:
-            print(f" -> {package} : Instalado")
+        if is_package_installed(package):
+            table.add_row(package, "SIM")
         else:
-            print(f" -> {package} : Não Instalado")
+            table.add_row(package, "NÃO")
+
+    console.print(table)
 
     with open("compose.yaml", "w") as arq:
         arq.write("")
     print("")
     print("=" * 40)
-    print("\n--> Arquivo 'compose.yaml' limpo!\n")
+    console.print("\nArquivo 'compose.yaml' limpo!\n", style="white on black")
 
     confirm = ""
-    while confirm not in ["Yes", "yes", "y", "Y", "No", "no", "n", "N"]:
+    while True:
         print("=" * 40)
-        print(f"""\n--> As seguintes configurações estão definidas atualmente no script:
-            
- - Numero de jogadores: {numero_jogadores}
- - Diretorio de interfaces do sistema operacional: {interfaces_folder}
- - Rede dos containers: {network}
- - Diretorio de templates(leia o README): {web_files_folder}
- - Nome da interface física: {interface_name}
- - Imagem do docker: {docker_image}
- - Portas a serem publicadas(lista): {portas}""")
+        table1 = Table(width=40, title="As seguintes configurações estão definidas atualmente no script")
+        table1.add_column("Configuração", style="cyan on black", overflow="fold")
+        table1.add_column("Configurado como", style="white on black")
+        table1.add_row("Numero de jogadores\n", str(numero_jogadores))
+        table1.add_row("Diretorio de interfaces\n", str(interfaces_folder))
+        table1.add_row("Rede dos containers\n", str(network))
+        table1.add_row("Diretorio de templates\n", str(web_files_folder))
+        table1.add_row("Nome da interface física\n", str(interface_name))
+        table1.add_row("Imagem do docker\n", str(docker_image))
+        table1.add_row("Portas a serem publicadas", str(portas))
+        console.print(table1)
         confirm = str(input("\nDeseja prosseguir na execução?(Yes, No) "))
-    if confirm in ["No", "no", "n","N"]:
-        print("\nAté Logo!")
-        exit()
+        if confirm in ["NO", "N"]:
+            print("\nAté Logo!")
+            exit()
+        if confirm in ["YES", "Y"]:
+            break
     escolha = ""
     while escolha not in [1,2,3]:
         print("\n", "=" * 40)
@@ -142,11 +179,11 @@ def main():
 
     match escolha:
         case 1:
-            composer['services'] = create_CTF(True)
+            composer['services'] = create_CTF()
         case 2:
-            composer['services'] = create_rtb(True)
+            composer['services'] = create_rtb()
         case 3:
-            composer['services'] = create_CTF(False) | create_rtb()
+            composer['services'] = create_CTF() | create_rtb()
 
     with open("compose.yaml", "w") as arq:
         yaml.dump(composer, arq)
