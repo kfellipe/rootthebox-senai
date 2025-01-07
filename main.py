@@ -8,7 +8,6 @@ from functions.create_rtb import create_rtb
 from functions.check_and_install_package import check_and_install_package
 
 # Edite essas variaveis de acordo com o seu uso
-# Maximo de 154(incluindo)
 configs = {
     "numero_jogadores": 10,
     "interfaces_folder": "/etc/network/interfaces.d",
