@@ -17,28 +17,27 @@ portas=["80", "22", "53"]
 def limpar_tela():
     os.system("clear")
 
+# Função para criar o arquivo das interfaces
+
+def create_interfaces(players, file, interface, network):
+    with open(file, "w") as arq:
+        arq.write("")
+    for x in range(1, players):
+        with open(file,"a") as arq:
+            arq.write(f"""
+auto {interface}:{x}
+iface {interface}:{x} inet static
+    address {network}.{x}
+    netmask 255.255.255.0
+
+""")
+
 # Função para criar os containers do CTF
 def create_CTF():
-    for x in range(1,numero_jogadores+1):
     # Criando o arquivo de interfaces para adicionar uma interface para cada CTF criado
-        number = f"{x:02}"
-        template_str = """
-{% for x in range(number) %}
-auto {{interface_name}}:1{{x}}
-iface {{interface_name}}:1{{x}} inet static
-    address {{network}}1{{x}}/24
-{% endfor %}
-"""
-
-        # Criar o template a partir da string
-        template = Template(template_str)
-
-        # Renderizar o template com os dados
-        output = template.render(number=number)
-        with open(f"{interfaces_folder}/interfaces-ctf.conf", "w") as arq:
-            arq.write(output)
-        my_cmd = f"sudo ifup {interface_name}:1{number}"
-        proc = subprocess.Popen(my_cmd, shell=True, stdout=subprocess.PIPE)
+    create_interfaces(players=numero_jogadores,interface=interface_name, file=f"{interfaces_folder}/ctf-interfaces.conf", network="10.0.0")
+    my_cmd = "sudo systemctl restart networking"
+    proc = subprocess.Popen(my_cmd, shell=True, stdout=subprocess.PIPE)
     if web_files_folder != "":
         try:
             os.mkdir(web_files_folder)
@@ -163,7 +162,7 @@ def main():
         table1.add_row("Imagem do docker\n", str(docker_image))
         table1.add_row("Portas a serem publicadas", str(portas))
         console.print(table1)
-        confirm = str(input("\nDeseja prosseguir na execução?(Yes, No) "))
+        confirm = str(input("\nDeseja prosseguir na execução?(Yes, No) ")).upper()
         if confirm in ["NO", "N"]:
             print("\nAté Logo!")
             exit()
