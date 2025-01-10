@@ -6,13 +6,17 @@ from rich.progress import Progress
 from functions.create_ctf import create_CTF
 from functions.create_rtb import create_rtb
 from functions.check_and_install_package import check_and_install_package
+from functions.change_configs import change_configs
+from functions.check_interfaces import listar_interfaces_fisicas
+
+interfaces = listar_interfaces_fisicas()
 
 # Edite essas variaveis de acordo com o seu uso
 configs = {
-    "numero_jogadores": 10,
+    "numero_jogadores": 2,
     "interfaces_folder": "/etc/network/interfaces.d",
-    "web_files_folder": "",
-    "interface_name": "ens224",
+    "web_files_folder": "html_files",
+    "interface_name": f"{interfaces[1]}",
     "network": "10.1.1.",
     "docker_image": "nycolases6/ubuntu-bind9-nginx-ssh:1.0",
     "portas": ["80", "22", "53"]
@@ -29,7 +33,7 @@ def main():
 
     print("\n" + "=" * 40 + "\n")
 
-    package_list = ['python3-yaml', 'python3-jinja2', 'pandoc', 'lynx']
+    package_list = ['python3-yaml', 'python3-jinja2', 'python3-psutil', 'pandoc', 'lynx']
 
     console.print("Verificando se os pacotes requeridos estão instalados:", style="white on black", justify="center")
 
@@ -56,12 +60,14 @@ def main():
         table1.add_row("Imagem do docker\n", str(configs['docker_image']))
         table1.add_row("Portas a serem publicadas", str(configs['portas']))
         console.print(table1)
-        confirm = str(input("\nDeseja prosseguir na execução?(Yes, No) ")).upper()
+        confirm = str(input("\nDeseja prosseguir na execução?(Yes, No, Edit) ")).upper()
         if confirm in ["NO", "N"]:
             print("\nAté Logo!")
             exit()
         if confirm in ["YES", "Y"]:
             break
+        if confirm in ["E", "EDIT"]:
+            change_configs(configs=configs)
     escolha = ""
     while escolha not in [1,2,3]:
         print("\n", "=" * 40)

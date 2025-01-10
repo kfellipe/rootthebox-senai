@@ -16,19 +16,13 @@ def create_CTF(configs):
     if configs['web_files_folder'] != "":
         try:
             os.mkdir(configs['web_files_folder'])
-            print(f"Directory '{configs['web_files_folder']}' created successfully.")
-        except FileExistsError:
-            print(f"Directory '{configs['web_files_folder']}' already exists.")
         except PermissionError:
             print(f"Permission denied: Unable to create '{configs['web_files_folder']}'.")
         except Exception as e:
             print(f"An error occurred: {e}")
         pwd = os.path.abspath(os.getcwd())
-        environment = Environment(loader=FileSystemLoader("templates/"))
-        template = environment.get_template("index.html")
-        for x in range(1,configs['numero_jogadores']+1):
-        # Criando uma pasta e um arquivo template para cada CTF criado
-            content = template.render(number=number)
+        for number in range(1,configs['numero_jogadores']+1):
+        # Criando uma pasta para cada CTF criado e copia os arquivos da pasta template para cada uma
             directory_name=f"{configs['web_files_folder']}/ctf-{number}"
             try:
                 os.mkdir(directory_name)
@@ -39,8 +33,7 @@ def create_CTF(configs):
                 print(f"Permission denied: Unable to create '{directory_name}'.")
             except Exception as e:
                 print(f"An error occurred: {e}")
-            with open(f"{configs['web_files_folder']}/ctf-{number}/index.html", mode="w", encoding="utf-8") as arq:
-                arq.write(content)
+            os.system(f"cp template/* {directory_name} -r")
 
     # Criando arquivo dos containers (composer)
     composer = {}
@@ -53,7 +46,7 @@ def create_CTF(configs):
         if configs['web_files_folder'] != "":
             composer[f"ctf-{number}"] = {'image': configs['docker_image'], 
                                                     'ports': portas_container, 
-                                                    "volumes": [f"{pwd}/{configs['web_files_folder']}/ctf-{number}:/usr/share/nginx/html"],
+                                                    "volumes": [f"{pwd}/{configs['web_files_folder']}/ctf-{number}:/var/www/html"],
                                                     "container_name": f"CTF-{number}--web"}
         else:
             composer[f"ctf-{number}"] = {'image': configs['docker_image'], 

@@ -3,8 +3,8 @@
 <hr>
 Primeiro passo, precisamos criar um Ambiente Virtual em python(venv) usando o seguinte comando: <code>python3 -m venv .venv</code>.<br><br>
 Agora, precisamos ativar a venv com o seguinte comando: <code>source .venv/bin/activate</code>.<br><br>
-Instale as dependencias necessarias <code>pip install pyyaml jinja2</code>.<br><br>
-Após a instalação, execute o comando <code>python main.py</code>.<br><br>
+Instale as dependencias necessarias <code>pip install pyyaml jinja2 psutil </code>.<br><br>
+Após a instalação, execute o comando <code>python3 main.py</code>.<br><br>
 Será pedido para você escolher uma das três opções de instalação: Instalar somente o RootTheBox, instalar somente os containers CTF ou instalar o RootTheBox e os containers CTF.<br><br>
 Esse comando, irá criar os arquivos de configurações de cada interface para cada jogador dentro do diretório especificado no script(padrão "/etc/network/interfaces.d/"), vai ligar cada interface criada, e vai criar o arquivo compose.yaml responsável por ligar os containers de cada jogador.<br><br>
 Se for passado a variavel "web_files_folder", você terá que criar uma pasta chamada "templates" e criar um arquivo dentro chamado index.html, esse arquivo será replicado para cada container dos jogadores(o arquivo tem que ser escrito em jinja2).<br><br>
