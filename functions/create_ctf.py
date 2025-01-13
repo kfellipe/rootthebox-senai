@@ -11,12 +11,12 @@ from rich.console import Console
 
 console = Console(width=40)
 
-
 def create_CTF(configs):
     # Criando o arquivo de interfaces para adicionar uma interface para cada CTF criado
     while True:
         standalone = str(input("Criar CTF em modo standalone?[yes, no] ")).upper()
         if standalone in ['YES','Y']:
+            configs['numero_jogadores'] = 1
             break
         if standalone in ['NO','N']:
             create_interfaces(players=configs['numero_jogadores'],interface=configs['interface_name'], file=f"{configs['interfaces_folder']}/ctf-interfaces.conf", network=configs['network'])
@@ -55,7 +55,7 @@ def create_CTF(configs):
             if standalone not in ["YES","Y"]:
                 portas_container.append(f"{configs['network']}{number}:{porta}:{porta}")
             else:
-                portas_container.append(f"{porta}:{porta}")
+                portas_container.append(f"20{porta}:{porta}")
 
         if configs['web_files_folder'] != "":
             composer[f"ctf-{number}"] = {'image': configs['docker_image'], 
