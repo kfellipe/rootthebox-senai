@@ -13,7 +13,7 @@ interfaces = listar_interfaces_fisicas()
 
 # Edite essas variaveis de acordo com o seu uso
 configs = {
-    "numero_jogadores": 2,
+    "numero_jogadores": 1,
     "interfaces_folder": "/etc/network/interfaces.d",
     "web_files_folder": "html_files",
     "interface_name": f"{interfaces[1]}",

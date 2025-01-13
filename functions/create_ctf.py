@@ -20,9 +20,9 @@ def create_CTF(configs):
             break
         if standalone in ['NO','N']:
             create_interfaces(players=configs['numero_jogadores'],interface=configs['interface_name'], file=f"{configs['interfaces_folder']}/ctf-interfaces.conf", network=configs['network'])
+            my_cmd = "sudo systemctl restart networking"
             break
         console.print(f"Apenas valores 'yes', 'y', 'n' ou 'no' são aceitos")
-    my_cmd = "sudo systemctl restart networking"
     proc = subprocess.Popen(my_cmd, shell=True, stdout=subprocess.PIPE)
     if configs['web_files_folder'] != "":
         try:
