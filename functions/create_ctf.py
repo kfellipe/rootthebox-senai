@@ -15,7 +15,7 @@ console = Console(width=40)
 def create_CTF(configs):
     # Criando o arquivo de interfaces para adicionar uma interface para cada CTF criado
     while True:
-        standalone = str(input("Criar CTF em modo standalone?[yes, no] "))
+        standalone = str(input("Criar CTF em modo standalone?[yes, no] ")).upper()
         if standalone in ['YES','Y']:
             break
         if standalone in ['NO','N']:
