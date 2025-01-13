@@ -7,10 +7,21 @@ import subprocess
 from jinja2 import Environment, FileSystemLoader
 from functions.create_interfaces import create_interfaces
 
+from rich.console import Console
+
+console = Console(width=40)
+
 
 def create_CTF(configs):
     # Criando o arquivo de interfaces para adicionar uma interface para cada CTF criado
-    create_interfaces(players=configs['numero_jogadores'],interface=configs['interface_name'], file=f"{configs['interfaces_folder']}/ctf-interfaces.conf", network=configs['network'])
+    while True:
+        standalone = str(input("Criar CTF em modo standalone?[yes, no] "))
+        if standalone in ['YES','Y']:
+            break
+        if standalone in ['NO','N']:
+            create_interfaces(players=configs['numero_jogadores'],interface=configs['interface_name'], file=f"{configs['interfaces_folder']}/ctf-interfaces.conf", network=configs['network'])
+            break
+        console.print(f"Apenas valores 'yes', 'y', 'n' ou 'no' são aceitos")
     my_cmd = "sudo systemctl restart networking"
     proc = subprocess.Popen(my_cmd, shell=True, stdout=subprocess.PIPE)
     if configs['web_files_folder'] != "":
@@ -41,7 +52,10 @@ def create_CTF(configs):
 
         portas_container = []
         for porta in configs['portas']:
-            portas_container.append(f"{configs['network']}{number}:{porta}:{porta}")
+            if standalone not in ["YES","Y"]:
+                portas_container.append(f"{configs['network']}{number}:{porta}:{porta}")
+            else:
+                portas_container.append(f"{porta}:{porta}")
 
         if configs['web_files_folder'] != "":
             composer[f"ctf-{number}"] = {'image': configs['docker_image'], 
