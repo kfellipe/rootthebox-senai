@@ -1,4 +1,4 @@
-import apt
+import subprocess, apt, time
 from rich.progress import Progress
 
 def check_and_install_package(package_name):
