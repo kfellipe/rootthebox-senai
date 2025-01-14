@@ -28,6 +28,7 @@ if aws == "":
     aws = False
 else:
     configs['docker_image'] = sys.argv[1]
+    configs['portas'] = sys.argv[2]
 
 
 def limpar_tela():

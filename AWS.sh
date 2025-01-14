@@ -39,4 +39,4 @@ sudo systemctl start start-ctf
 
 sudo systemctl enable start-ctf
 
-sudo python3 main.py "True" "[22,80,53]"
+sudo python3 main.py "True" $IMAGEM_DO_CONTAINER $PORTAS_DO_CONTAINER
