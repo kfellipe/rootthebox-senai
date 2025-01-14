@@ -1,6 +1,20 @@
-# Script para criar múltiplos containers
-## Para o correto funcionamento do script, existe algumas variáveis no incio do código, adapte elas para seu caso.
+# RootTheBox SENAI
+## Bem-vindo ao script para criar um jogo CTF utilizando containers docker
+
+## Instalando em um ambiente AWS
+Para a correta instalação utilizando um ambiente AWS, siga os seguintes passos:<br>
+
+
+### Observações importantes
+O script foi criado e testado em um ambiente com sistema operacional debian 12(bookworm). <br> 
+Certifique-se de estar logado no super-usuário(root) para o correto funcionamento do script. <br>
+Execute o comando:<br> <code> sudo -l </code> <br>e veja se o comando existe, caso não exista, execute:<br> <code> apt update </code><br><code> apt install sudo -y </code><br>
+e tente executar o comando novamente.
+Execute o comando:<br> <code> systemctl status networking </code>
+
 <hr>
+
+### Instalando as dependências necessárias
 Primeiro passo, precisamos criar um Ambiente Virtual em python(venv) usando o seguinte comando: <code>python3 -m venv .venv</code>.<br><br>
 Agora, precisamos ativar a venv com o seguinte comando: <code>source .venv/bin/activate</code>.<br><br>
 Instale as dependencias necessarias <code>pip install pyyaml jinja2 psutil </code>.<br><br>

@@ -67,11 +67,12 @@ def create_CTF(configs):
                                                     'ports': portas_container,
                                                     "container_name": f"CTF-{number}--web"}
 
-    with open("mapeamento_de_ip.md", "w") as arq:
-        arq.write("# Mapeamento de IP\n")
-        arq.write("<table><tr><th>Jogador</th><th>Endereço IP</th></tr>")
-        for number in range(1, configs['numero_jogadores']+1):
-            arq.write(f"<tr><td>{number}</td><td>{configs['network']}{number}</td></tr>")
-        arq.write("</table>")
+    if standalone in ["NO", "N"]:
+        with open("mapeamento_de_ip.md", "w") as arq:
+            arq.write("# Mapeamento de IP\n")
+            arq.write("<table><tr><th>Jogador</th><th>Endereço IP</th></tr>")
+            for number in range(1, configs['numero_jogadores']+1):
+                arq.write(f"<tr><td>{number}</td><td>{configs['network']}{number}</td></tr>")
+            arq.write("</table>")
 
     return composer
