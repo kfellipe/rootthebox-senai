@@ -11,13 +11,13 @@ sudo apt update
 
 sudo apt install docker docker-compose python3-psutil git -y
 
-sudo mkdir /data/rootthebox-ctf -p
+sudo mkdir /data -p
 
-sudo cd /data/rootthebox-ctf
+sudo cd /data
 
 sudo git clone https://github.com/kfellipe/rootthebox-senai.git
 
-sudo cd /data/rootthebox-ctf/rootthebox-senai
+sudo cd /data/rootthebox-senai
 
 sudo cat <<EOF>/etc/systemd/system/start-ctf.service
 

@@ -1,5 +1,5 @@
 #!/bin/bash
 
-sudo cd /data/rootthebox-ctf/rootthebox-senai
+sudo cd /data/rootthebox-senai
 
 sudo docker-compose up -d
