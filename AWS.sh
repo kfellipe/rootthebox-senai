@@ -27,7 +27,7 @@ After=network-online.target
 Wants=network-online.target
 
 [Service]
-ExecStart=/bin/bash /data/rootthebox-ctf/rootthebox-senai/start-container-AWS.sh
+ExecStart=/bin/bash /data/rootthebox-senai/start-container-AWS.sh
 
 [Install]
 WantedBy=multi-user.targe
