@@ -1,5 +1,3 @@
 #!/bin/bash
 
-sudo cd /data/rootthebox-senai
-
-sudo docker-compose up -d
+sudo docker-compose -f /home/admin/rootthebox-senai/compose.yaml up -d
