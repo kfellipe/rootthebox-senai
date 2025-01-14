@@ -9,7 +9,7 @@ PORTAS_DO_CONTAINER="[80, 22, 53]"
 
 sudo apt update
 
-sudo apt install docker docker-compose python3-psutil git
+sudo apt install docker docker-compose python3-psutil git -y
 
 sudo mkdir /data/rootthebox-ctf -p
 
