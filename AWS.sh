@@ -7,8 +7,9 @@ IMAGEM_DO_CONTAINER="nycolases6/ubuntu-bind9-nginx-ssh:1.0"
 # Exemplo: [22, 80, 443, 53]
 PORTAS_DO_CONTAINER="[80, 22, 53]"
 
+sudo apt update
 
-sudo apt install docker docker-compose python3-psutil
+sudo apt install docker docker-compose python3-psutil git
 
 sudo mkdir /data/rootthebox-ctf -p
 
