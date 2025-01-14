@@ -13,9 +13,7 @@ sudo apt install docker docker-compose python3-psutil git -y
 
 sudo mkdir /data -p
 
-sudo cd /data
-
-sudo git clone https://github.com/kfellipe/rootthebox-senai.git
+sudo cd /data ; sudo git clone https://github.com/kfellipe/rootthebox-senai.git
 
 sudo cd /data/rootthebox-senai
 
