@@ -1,4 +1,3 @@
-from jinja2 import Environment, FileSystemLoader, Template
 import os, yaml, subprocess, time, sys
 from rich.console import Console
 from rich.table import Table
@@ -15,7 +14,6 @@ interfaces = listar_interfaces_fisicas()
 configs = {
     "numero_jogadores": 1,
     "interfaces_folder": "/etc/network/interfaces.d",
-    "web_files_folder": "html_files",
     "interface_name": f"{interfaces[1]}",
     "network": "10.1.1.",
     "docker_image": "nycolases6/ubuntu-bind9-nginx-ssh:1.0",
@@ -66,7 +64,6 @@ def main():
             table1.add_row("Numero de jogadores\n", str(configs['numero_jogadores']))
             table1.add_row("Diretorio de interfaces\n", str(configs['interfaces_folder']))
             table1.add_row("Rede dos containers\n", str(configs['network']))
-            table1.add_row("Diretorio de templates\n", str(configs['web_files_folder']))
             table1.add_row("Nome da interface física\n", str(configs['interface_name']))
             table1.add_row("Imagem do docker\n", str(configs['docker_image']))
             table1.add_row("Portas a serem publicadas", str(configs['portas']))

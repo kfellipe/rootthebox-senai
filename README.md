@@ -1,26 +1,38 @@
 # RootTheBox SENAI
 ## Bem-vindo ao script para criar um jogo CTF utilizando containers docker
 
-## Instalando em um ambiente AWS
+### Instalando em um ambiente AWS
 Para a correta instalação utilizando um ambiente AWS, siga os seguintes passos:<br>
-Crie uma instância EC2
+Crie uma instância EC2:
+ - Utilize Debian como sistema operacional.
+ - Edite "Número de instâncias" para o numero de jogadores.
+ - Adicione uma nova regra de segurança para permitir qualquer IP realizar requisições na porta 2022.
+ - Permita o tráfego HTTP.
+ - Entre nesse [link](https://raw.githubusercontent.com/kfellipe/rootthebox-senai/refs/heads/master/AWS.sh) e copie todo o conteudo da pagina.<br>
+Cole o conteudo no campo "dados de usuário" (em "detalhes avançados").
 
+Após seguir esses passos, execute a instância e aguarde a instância ligar e o script executar. (~2min)
 
-### Observações importantes
-O script foi criado e testado em um ambiente com sistema operacional debian 12(bookworm). <br> 
-Certifique-se de estar logado no super-usuário(root) para o correto funcionamento do script. <br>
-Execute o comando:<br> <code> sudo -l </code> <br>e veja se o comando existe, caso não exista, execute:<br> <code> apt update </code><br><code> apt install sudo -y </code><br>
-e tente executar o comando novamente.
+Agora, basta acessar seu container através do IP público da sua instância.
 
-<hr>
+### Instalando em um ambiente onprimise
 
-### Instalando as dependências necessárias
-Primeiro passo, precisamos criar um Ambiente Virtual em python(venv) usando o seguinte comando: <code>python3 -m venv .venv</code>.<br><br>
-Agora, precisamos ativar a venv com o seguinte comando: <code>source .venv/bin/activate</code>.<br><br>
-Instale as dependencias necessarias <code>pip install pyyaml jinja2 psutil </code>.<br><br>
-Após a instalação, execute o comando <code>python3 main.py</code>.<br><br>
-Será pedido para você escolher uma das três opções de instalação: Instalar somente o RootTheBox, instalar somente os containers CTF ou instalar o RootTheBox e os containers CTF.<br><br>
-Esse comando, irá criar os arquivos de configurações de cada interface para cada jogador dentro do diretório especificado no script(padrão "/etc/network/interfaces.d/"), vai ligar cada interface criada, e vai criar o arquivo compose.yaml responsável por ligar os containers de cada jogador.<br><br>
-Se for passado a variavel "web_files_folder", você terá que criar uma pasta chamada "templates" e criar um arquivo dentro chamado index.html, esse arquivo será replicado para cada container dos jogadores(o arquivo tem que ser escrito em jinja2).<br><br>
-Após a execução completa do script, execute o seguinte comando para iniciar os containers: <code>docker compose up</code>.<br><br>
-Para saber as informações sobre cada container e cada endereço IP, verifique o arquivo "mapeamento_de_ip.md" com o comando <code>pandoc mapeamento_de_ip.md | lynx -stdin </code>.
+#### Observações
+ - O script foi criado e testado em um ambiente com sistema operacional debian 12(bookworm).
+ - Certifique-se de estar logado no super-usuário(root) para o correto funcionamento do script.
+ - Execute o comando:<br> <code> sudo -l </code> <br>e veja se o comando existe, caso não exista, execute:<br> <code> apt update </code><br><code> apt install sudo -y </code><br>
+e tente executar o comando novamente. <br>
+
+#### Instalando as dependências
+ - Instale as dependências necessárias usando o seguinte comando: <br> <code> sudo apt install docker docker-compose python3-psutil python3-pip python3-yaml python3-apt python3-rich git -y </code>
+ - Execute o comando:<br> <code> git clone https://github.com/kfellipe/rootthebox-senai.git </code>
+
+#### Executando o script
+ - Entre na pasta com o comando: <code> cd rootthebox-senai </code> e execute o comando <code> python3 main.py </code>
+ - Será apresentado as configurações padrão do script como: numero de jogadores, imagem do docker, etc... Se você concorda com as configurações, escreva "yes" e aperte "Enter".
+ - Se desejar editar alguma configuração, digite "edit" e pressione "Enter".
+ - Você terá que decidir se deseja instalar apenas os containers(opção 1), apenas o rootthebox(opção 2) ou ambos(opção 3).
+ - Execute o comando: <br>
+<code> docker-compose up -d </code>
+ - Para saber como acessar os containers, o script criará um arquivo chamado "mapeamento_de_ip.md", execute o comando: <br><code> pandoc mapeamento_de_ip.md | lynx -stdin </code>
+ - Para acessar o RootTheBox(caso você opte por inicia-lo também), basta usar o endereço IP da sua máquina host com a porta 8888 em um navegador.

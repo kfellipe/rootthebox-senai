@@ -4,7 +4,6 @@
 import os
 import subprocess
 
-from jinja2 import Environment, FileSystemLoader
 from functions.create_interfaces import create_interfaces
 
 from rich.console import Console
@@ -28,27 +27,6 @@ def create_CTF(configs, aws):
     else:
         standalone = "YES"
         configs['numero_jogadores'] = 1
-    if configs['web_files_folder'] != "":
-        try:
-            os.mkdir(configs['web_files_folder'])
-        except PermissionError:
-            print(f"Permission denied: Unable to create '{configs['web_files_folder']}'.")
-        except Exception as e:
-            print(f"An error occurred: {e}")
-        pwd = os.path.dirname(os.path.abspath(__file__))
-        for number in range(1,configs['numero_jogadores']+1):
-        # Criando uma pasta para cada CTF criado e copia os arquivos da pasta template para cada uma
-            directory_name=f"{configs['web_files_folder']}/ctf-{number}"
-            try:
-                os.mkdir(directory_name)
-                print(f"Directory '{directory_name}' created successfully.")
-            except FileExistsError:
-                print(f"Directory '{directory_name}' already exists.")
-            except PermissionError:
-                print(f"Permission denied: Unable to create '{directory_name}'.")
-            except Exception as e:
-                print(f"An error occurred: {e}")
-            os.system(f"cp /data/rootthebox-senai/template/* /data/rootthebox-senai/functions/html_files/{configs['web_files_folder']}/ctf-{number}/ -r")
 
     # Criando arquivo dos containers (composer)
     composer = {}
@@ -61,15 +39,9 @@ def create_CTF(configs, aws):
             else:
                 portas_container.append(f"{porta}:{porta}")
 
-        if configs['web_files_folder'] != "":
-            composer[f"ctf-{number}"] = {'image': configs['docker_image'], 
-                                                    'ports': portas_container, 
-                                                    "volumes": [f"{pwd}/{configs['web_files_folder']}/ctf-{number}:/var/www/html"],
-                                                    "container_name": f"CTF-{number}--web"}
-        else:
-            composer[f"ctf-{number}"] = {'image': configs['docker_image'], 
-                                                    'ports': portas_container,
-                                                    "container_name": f"CTF-{number}--web"}
+        composer[f"ctf-{number}"] = {'image': configs['docker_image'], 
+                                                'ports': portas_container,
+                                                "container_name": f"CTF-{number}--web"}
 
     if standalone in ["NO", "N"]:
         with open("mapeamento_de_ip.md", "w") as arq:
