@@ -11,7 +11,7 @@ Crie uma instância EC2:
  - Entre nesse [link](https://raw.githubusercontent.com/kfellipe/rootthebox-senai/refs/heads/master/AWS.sh) e copie todo o conteudo da pagina.<br>
 Cole o conteudo no campo "dados de usuário" (em "detalhes avançados").
 
-Após seguir esses passos, execute a instância e aguarde a instância ligar e o script executar. (~2min)
+Após seguir esses passos, execute a instância e aguarde a instância ligar e o script executar. (~6min)
 
 Agora, basta acessar seu container através do IP público da sua instância.
 
