@@ -4,18 +4,20 @@
 IMAGEM_DO_CONTAINER="nycolases6/ubuntu-bind9-nginx-ssh:1.0"
 
 # Defina as portas que o container ira usar
-# Exemplo: [22, 80, 443, 53]
-PORTAS_DO_CONTAINER="80, 22, 53"
+# Exemplo: [22,80,443,53]
+PORTAS_DO_CONTAINER="80,22,53"
 
-sudo yum update
+sudo apt update
+
 sudo mkdir /data
-sudo yum install docker python3-psutil python3-pip python3-yaml python3-jinja2 git -y
+
+sudo apt install docker docker-compose python3-psutil python3-pip python3-yaml python3-jinja2 python3-apt git -y
 
 sudo python3 -m pip install rich
 
-sudo curl -L https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
+# sudo curl -L https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
 
-sudo chmod +x /usr/local/bin/docker-compose
+# sudo chmod +x /usr/local/bin/docker-compose
 
 sudo git clone https://github.com/kfellipe/rootthebox-senai.git /data/rootthebox-senai
 
