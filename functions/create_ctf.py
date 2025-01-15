@@ -48,7 +48,7 @@ def create_CTF(configs, aws):
                 print(f"Permission denied: Unable to create '{directory_name}'.")
             except Exception as e:
                 print(f"An error occurred: {e}")
-            os.system(f"cp {pwd}/../template/* {directory_name} -r")
+            os.system(f"cp /data/rootthebox-senai/template/* /data/rootthebox-senai/functions/html_files/{configs['web_files_folder']}/ctf-{number}/ -r")
 
     # Criando arquivo dos containers (composer)
     composer = {}
