@@ -11,7 +11,6 @@ O script foi criado e testado em um ambiente com sistema operacional debian 12(b
 Certifique-se de estar logado no super-usuário(root) para o correto funcionamento do script. <br>
 Execute o comando:<br> <code> sudo -l </code> <br>e veja se o comando existe, caso não exista, execute:<br> <code> apt update </code><br><code> apt install sudo -y </code><br>
 e tente executar o comando novamente.
-Execute o comando:<br> <code> systemctl status networking </code>
 
 <hr>
 
