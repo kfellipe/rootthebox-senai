@@ -3,6 +3,9 @@
 # Nome da imagem do container. Exemplo: "ubuntu:latest"
 IMAGEM_DO_CONTAINER="nycolases6/ubuntu-bind9-nginx-ssh:1.0"
 
+# Se desejar instalar o RootTheBox junto ao jogo, mude a opção abaixo para "True"
+ROOTTHEBOX="False"
+
 # Defina as portas que o container ira usar
 # Exemplo: "22,80,443,53"
 PORTAS_DO_CONTAINER="80,22"
@@ -36,7 +39,7 @@ WantedBy=multi-user.target
 
 EOF
 
-sudo python3 /data/rootthebox-senai/main.py "True" $IMAGEM_DO_CONTAINER $PORTAS_DO_CONTAINER
+sudo python3 /data/rootthebox-senai/main.py "True" $ROOTTHEBOX $IMAGEM_DO_CONTAINER $PORTAS_DO_CONTAINER
 
 sudo systemctl daemon-reload
 

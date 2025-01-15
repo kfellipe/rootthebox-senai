@@ -1,4 +1,3 @@
-
 # Função para criar os containers do CTF
 
 import os

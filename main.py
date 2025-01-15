@@ -22,8 +22,9 @@ configs = {
 
 try:
     aws = sys.argv[1]
-    configs['docker_image'] = sys.argv[2]
-    configs['portas'] = sys.argv[3].split(",")
+    aws_and_rtb = sys.argv[2]
+    configs['docker_image'] = sys.argv[3]
+    configs['portas'] = sys.argv[4].split(",")
 except:
     aws = False
     configs['docker_image'] = "nycolases6/ubuntu-bind9-nginx-ssh:1.0"
@@ -93,7 +94,10 @@ def main():
 
     if aws:
         composer = {}
-        composer['services'] = create_CTF(configs=configs, aws=True)
+        if aws_and_rtb:
+            composer['services'] = create_CTF(configs=configs, aws=True) | create_rtb()
+        else:
+            composer['services'] = create_CTF(configs=configs, aws=True)
     pwd = os.path.dirname(os.path.abspath(__file__))
     with open(f"{pwd}/compose.yaml", "w") as arq:
         yaml.dump(composer, arq)
