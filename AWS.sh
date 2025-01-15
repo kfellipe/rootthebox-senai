@@ -32,10 +32,10 @@ WantedBy=multi-user.targe
 
 EOF
 
+sudo python3 /data/rootthebox-senai/main.py "True" $IMAGEM_DO_CONTAINER $PORTAS_DO_CONTAINER
+
 sudo systemctl daemon-reload
 
 sudo systemctl start start-ctf
 
 sudo systemctl enable start-ctf
-
-sudo python3 main.py "True" $IMAGEM_DO_CONTAINER $PORTAS_DO_CONTAINER

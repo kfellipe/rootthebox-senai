@@ -87,12 +87,11 @@ def main():
         
         composer = {}
 
-        match escolha:
-            case 1:
-                composer['services'] = create_CTF(configs=configs, aws=False)
-            case 2:
+        if escolha == 1:
+            composer['services'] = create_CTF(configs=configs, aws=False)
+        if escolha == 2:
                 composer['services'] = create_rtb()
-            case 3:
+        if escolha == 3:
                 composer['services'] = create_CTF(configs=configs, aws=False) | create_rtb()
 
     if aws:
