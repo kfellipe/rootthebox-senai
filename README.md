@@ -3,6 +3,7 @@
 
 ## Instalando em um ambiente AWS
 Para a correta instalação utilizando um ambiente AWS, siga os seguintes passos:<br>
+Crie uma instância EC2
 
 
 ### Observações importantes
