@@ -9,7 +9,9 @@ PORTAS_DO_CONTAINER="80, 22, 53"
 
 sudo yum update
 sudo mkdir /data
-sudo yum install docker docker-compose python3-psutil git -y
+sudo yum install docker python3-psutil python3-pip python3-yaml python3-jinja2 git -y
+
+sudo python3 -m pip install rich
 
 sudo curl -L https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
 
