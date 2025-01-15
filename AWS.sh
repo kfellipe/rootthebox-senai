@@ -7,6 +7,10 @@ IMAGEM_DO_CONTAINER="nycolases6/ubuntu-bind9-nginx-ssh:1.0"
 # Exemplo: "22,80,443,53"
 PORTAS_DO_CONTAINER="80,22"
 
+sudo echo "Port 2022" >> /etc/ssh/sshd_config
+
+sudo systemctl restart sshd
+
 sudo apt update
 
 sudo mkdir /data
@@ -43,7 +47,3 @@ sudo systemctl daemon-reload
 sudo systemctl start start-ctf
 
 sudo systemctl enable start-ctf
-
-sudo echo "Port 2022" >> /etc/ssh/sshd_config
-
-sudo systemctl restart sshd
