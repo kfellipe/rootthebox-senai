@@ -100,8 +100,12 @@ def change_configs(configs):
         if confirm == 5:
             limpar_tela()
             while True:
+                console.print("Deixe o campo vazio para cancelar", style="White on black")
                 console.print(f"Atualmente configurado como: {configs['docker_image']}", style="white on black")
                 nome_imagem = str(input("Digite o nome da imagem Docker (exemplo: 'ubuntu:latest'): "))
+                if nome_imagem == "":
+                    limpar_tela()
+                    break
                 try:
                     # Conecta ao daemon do Docker
                     cliente_docker = docker.from_env()

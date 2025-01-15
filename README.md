@@ -24,7 +24,7 @@ Agora, basta acessar seu container através do IP público da sua instância.
 e tente executar o comando novamente. <br>
 
 #### Instalando as dependências
- - Instale as dependências necessárias usando o seguinte comando: <br> <code> sudo apt install docker docker-compose python3-psutil python3-pip python3-yaml python3-apt python3-rich git -y </code>
+ - Instale as dependências necessárias usando o seguinte comando: <br> <code> sudo apt install docker docker-compose python3-psutil python3-pip python3-yaml python3-apt python3-rich pandoc lynx git -y </code>
  - Execute o comando:<br> <code> git clone https://github.com/kfellipe/rootthebox-senai.git </code>
 
 #### Executando o script
@@ -32,6 +32,8 @@ e tente executar o comando novamente. <br>
  - Será apresentado as configurações padrão do script como: numero de jogadores, imagem do docker, etc... Se você concorda com as configurações, escreva "yes" e aperte "Enter".
  - Se desejar editar alguma configuração, digite "edit" e pressione "Enter".
  - Você terá que decidir se deseja instalar apenas os containers(opção 1), apenas o rootthebox(opção 2) ou ambos(opção 3).
+ - Se você optar por instalar apenas os containers(opção 1) ou ambos(opção 3), você precisará decidir entre usar o modo standalone ou não.
+ - Modo Standalone: vai configurar apenas um container docker e esse container irá utilizar o endereço IP do host.(ideal para atividades individuais)
  - Execute o comando: <br>
 <code> docker-compose up -d </code>
  - Para saber como acessar os containers, o script criará um arquivo chamado "mapeamento_de_ip.md", execute o comando: <br><code> pandoc mapeamento_de_ip.md | lynx -stdin </code>
