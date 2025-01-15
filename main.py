@@ -22,20 +22,21 @@ configs = {
     "portas": ["80", "22", "53"]
 }
 
-aws = sys.argv[0]
-
-if aws == "":
+try:
+    aws = sys.argv[1]
+    configs['docker_image'] = sys.argv[2]
+    configs['portas'] = sys.argv[3].split(",")
+except:
     aws = False
-else:
-    configs['docker_image'] = sys.argv[1]
-    configs['portas'] = sys.argv[2]
-
+    configs['docker_image'] = "nycolases6/ubuntu-bind9-nginx-ssh:1.0"
+    configs['portas'] = ["80", "22", "53"]
+    pass
 
 def limpar_tela():
     os.system("clear")
 
 def main():
-    if not aws:
+    if aws == False:
         limpar_tela()
         console = Console(width=40)
         console.print("Bem Vindo!", style="bold italic cyan on white", justify="center")
@@ -88,16 +89,17 @@ def main():
 
         match escolha:
             case 1:
-                composer['services'] = create_CTF(configs=configs)
+                composer['services'] = create_CTF(configs=configs, aws=False)
             case 2:
                 composer['services'] = create_rtb()
             case 3:
-                composer['services'] = create_CTF(configs=configs) | create_rtb()
+                composer['services'] = create_CTF(configs=configs, aws=False) | create_rtb()
 
     if aws:
-        composer['services'] = create_CTF(configs=configs)
-        
-    with open("compose.yaml", "w") as arq:
+        composer = {}
+        composer['services'] = create_CTF(configs=configs, aws=True)
+    pwd = os.path.dirname(os.path.abspath(__file__))
+    with open(f"{pwd}/compose.yaml", "w") as arq:
         yaml.dump(composer, arq)
 
 if __name__ == "__main__":
