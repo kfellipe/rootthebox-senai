@@ -19,10 +19,6 @@ sudo apt install docker docker-compose python3-psutil python3-pip python3-yaml p
 
 sudo python3 -m pip install rich
 
-# sudo curl -L https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
-
-# sudo chmod +x /usr/local/bin/docker-compose
-
 sudo git clone https://github.com/kfellipe/rootthebox-senai.git /data/rootthebox-senai
 
 sudo cat <<EOF>/etc/systemd/system/start-ctf.service
@@ -36,7 +32,7 @@ Wants=network-online.target
 ExecStart=/bin/bash /data/rootthebox-senai/start-container-AWS.sh
 
 [Install]
-WantedBy=multi-user.targe
+WantedBy=multi-user.target
 
 EOF
 
