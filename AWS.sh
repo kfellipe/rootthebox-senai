@@ -4,7 +4,7 @@
 IMAGEM_DO_CONTAINER="nycolases6/ubuntu-bind9-nginx-ssh:1.0"
 
 # Defina as portas que o container ira usar
-# Exemplo: [22,80,443,53]
+# Exemplo: "22,80,443,53"
 PORTAS_DO_CONTAINER="80,22"
 
 sudo apt update
