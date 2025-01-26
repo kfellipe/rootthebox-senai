@@ -16,7 +16,7 @@ configs = {
     "interfaces_folder": "/etc/network/interfaces.d",
     "interface_name": f"{interfaces[1]}",
     "network": "10.1.1.",
-    "docker_image": "nycolases6/ubuntu-bind9-nginx-ssh:1.0",
+    "docker_image": "nycolases6/ubuntu-bind9-nginx-ssh:1.1",
     "portas": ["80", "22", "53"]
 }
 
