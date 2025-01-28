@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Nome da imagem do container. Exemplo: "ubuntu:latest"
-IMAGEM_DO_CONTAINER="nycolases6/ubuntu-bind9-nginx-ssh:1.0"
+IMAGEM_DO_CONTAINER="nycolases6/ubuntu-bind9-nginx-ssh:1.1"
 
 # Se desejar instalar o RootTheBox junto ao jogo, mude a opção abaixo para "True"
 ROOTTHEBOX="False"
